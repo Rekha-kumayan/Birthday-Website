@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday! 🎂 A Special Surprise</title>
+  <meta name="description" content="A personalized, magical birthday surprise created with love. Open this page for a beautiful birthday celebration!" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════
+       BACKGROUND PARTICLES (stars & sparkles)
+       ════════════════════════════════════════════════════════ -->
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+  <!-- ════════════════════════════════════════════════════════
+       CONFETTI CANVAS
+       ════════════════════════════════════════════════════════ -->
+  <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- ════════════════════════════════════════════════════════
+       FIREWORKS CANVAS
+       ════════════════════════════════════════════════════════ -->
+  <canvas id="fireworks-canvas" aria-hidden="true"></canvas>
+
+  <!-- ════════════════════════════════════════════════════════
+       FLOATING HEARTS CONTAINER (for gift reveal)
+       ════════════════════════════════════════════════════════ -->
+  <div id="floating-hearts" class="floating-hearts-container" aria-hidden="true"></div>
+
+  <!-- ════════════════════════════════════════════════════════
+       WELCOME SCREEN
+       ════════════════════════════════════════════════════════ -->
+  <div id="welcome-screen" role="dialog" aria-label="Birthday surprise welcome screen">
+    <!-- Floating balloons -->
+    <div class="balloons" aria-hidden="true">
+      <div class="balloon">🎈</div>
+      <div class="balloon">🩷</div>
+      <div class="balloon">🎈</div>
+      <div class="balloon">💜</div>
+      <div class="balloon">🎈</div>
+      <div class="balloon">🩷</div>
+      <div class="balloon">🎈</div>
+      <div class="balloon">💜</div>
+    </div>
+
+    <div class="welcome-content">
+      <div class="cake-container">
+        <span class="cake-emoji" aria-hidden="true">🎂</span>
+        <div class="cake-glow"></div>
+      </div>
+
+      <h1 class="welcome-heading">A Little Surprise Just for You</h1>
+      <!-- ✏️ CUSTOMISE: Change the birthday person's name below -->
+      <p class="welcome-name" id="welcome-name-display">Sweetheart</p>
+
+      <button
+        id="btn-open-surprise"
+        class="btn-surprise"
+        aria-label="Open your birthday surprise"
+      >
+        <span>Open Your Surprise 🎁</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════
+       MAIN CONTENT (hidden until surprise is opened)
+       ════════════════════════════════════════════════════════ -->
+  <main id="main-content" class="hidden" aria-label="Birthday celebration">
+
+    <!-- ──────────────────────────────────────────────────────
+         SECTION 1 — CELEBRATION
+         ────────────────────────────────────────────────────── -->
+    <section id="celebration" class="section">
+      <h2 class="celebration-heading" id="celebration-heading">
+        Happy Birthday! 🎉
+      </h2>
+
+      <div class="typewriter-container">
+        <p class="typewriter-text" id="typewriter-text" aria-live="polite"></p>
+        <span class="typewriter-cursor" aria-hidden="true"></span>
+      </div>
+
+      <!-- Interactive Cake -->
+      <div class="interactive-cake">
+        <div class="candle-flames" id="candle-flames" aria-hidden="true">
+          <div class="flame"></div>
+          <div class="flame"></div>
+          <div class="flame"></div>
+          <div class="flame"></div>
+          <div class="flame"></div>
+        </div>
+        <div
+          class="cake-display"
+          id="interactive-cake-btn"
+          role="button"
+          tabindex="0"
+          aria-label="Click the cake to blow out the candles and make a wish"
+        >🎂</div>
+        <p class="cake-instruction" id="cake-instruction">
+          ✨ Click the cake to blow out the candles and make a wish! ✨
+        </p>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECTION 2 — COUNTDOWN / TODAY
+         ────────────────────────────────────────────────────── -->
+    <section id="countdown-section" class="section">
+      <h2 class="section-title">🎂 Birthday Countdown 🎂</h2>
+      <p class="section-subtitle" id="countdown-subtitle">The big day is coming soon!</p>
+
+      <!-- Countdown boxes (filled by JS) -->
+      <div class="countdown-wrapper" id="countdown-display"></div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECTION 3 — PHOTO GALLERY
+         ────────────────────────────────────────────────────── -->
+    <section id="gallery" class="section">
+      <h2 class="section-title">Our Beautiful Memories 💕</h2>
+      <p class="section-subtitle">Every picture tells a story worth reliving</p>
+
+      <div class="gallery-grid" id="gallery-grid">
+        <!-- Gallery items are injected by JavaScript for easy customisation -->
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECTION 4 — LOVE NOTES JAR
+         ────────────────────────────────────────────────────── -->
+    <section id="love-notes-section" class="section">
+      <h2 class="section-title">Jar of Sweet Nothings 💌</h2>
+      <p class="section-subtitle">Click the jar to pull out a love note</p>
+
+      <div class="jar-wrapper" id="jar-wrapper">
+        <div class="jar" id="jar-btn" role="button" tabindex="0" aria-label="Click to pull out a random love note">
+          <div class="jar-body">
+            <div class="jar-hearts" aria-hidden="true">
+              <span>💌</span><span>💕</span><span>💗</span>
+              <span>💖</span><span>✉️</span><span>💓</span>
+            </div>
+          </div>
+          <div class="jar-lid"></div>
+          <div class="jar-shine" aria-hidden="true"></div>
+        </div>
+        <p class="jar-instruction">✨ Tap to pick a note ✨</p>
+      </div>
+
+      <div class="love-note-card hidden" id="love-note-card" aria-live="polite">
+        <p class="love-note-text" id="love-note-text"></p>
+        <button class="btn-reopen" id="btn-next-note" aria-label="Pick another love note">Pick Another 💌</button>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECTION 5 — GIFT / SURPRISE LETTER
+         ────────────────────────────────────────────────────── -->
+    <section id="gift-section" class="section">
+      <h2 class="section-title">A Special Gift for You 🎁</h2>
+      <p class="section-subtitle">Tap the gift box to reveal your surprise</p>
+
+      <div
+        class="gift-box-wrapper"
+        id="gift-box-wrapper"
+        role="button"
+        tabindex="0"
+        aria-label="Open gift box to reveal a personal birthday letter"
+      >
+        <div class="gift-bow" aria-hidden="true">🎀</div>
+        <div class="gift-box">
+          <div class="gift-box-lid"></div>
+          <div class="gift-box-body"></div>
+        </div>
+      </div>
+
+      <!-- Personalized letter (hidden until gift is opened) -->
+      <div class="gift-letter" id="gift-letter" aria-live="polite">
+        <h3 class="letter-heading" id="letter-heading">Dear Sweetheart,</h3>
+        <div class="letter-body" id="letter-body">
+          <!-- Filled by JS from config -->
+        </div>
+        <p class="letter-signature" id="letter-signature">With all my love ❤️</p>
+        <button
+          class="btn-reopen"
+          id="btn-reopen-gift"
+          aria-label="Close the letter and reopen the gift"
+        >
+          Replay the Surprise 🎁
+        </button>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECTION 6 — WISH LANTERNS
+         ────────────────────────────────────────────────────── -->
+    <section id="lantern-section" class="section lantern-section">
+      <h2 class="section-title">Release a Wish Lantern 🏮</h2>
+      <p class="section-subtitle">Each lantern carries a wish to the stars</p>
+
+      <div class="lantern-sky" id="lantern-sky">
+        <div class="lantern-stars" aria-hidden="true"></div>
+      </div>
+
+      <button
+        class="btn-surprise btn-lantern"
+        id="btn-release-lantern"
+        aria-label="Release a glowing wish lantern into the sky"
+      >
+        <span>Release a Lantern 🏮</span>
+      </button>
+      <p class="lantern-counter" id="lantern-counter">Wishes sent: 0</p>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECTION 7 — STAR WISH CONSTELLATION
+         ────────────────────────────────────────────────────── -->
+    <section id="star-wish-section" class="section">
+      <h2 class="section-title">Draw a Wish Upon the Stars ⭐</h2>
+      <p class="section-subtitle">Click anywhere on the canvas to place stars and create your constellation</p>
+
+      <div class="star-canvas-wrapper">
+        <canvas id="star-canvas" width="800" height="450" aria-label="Interactive star drawing canvas"></canvas>
+        <div class="star-canvas-actions">
+          <button class="btn-reopen" id="btn-clear-stars" aria-label="Clear all stars">Clear Stars ✨</button>
+          <button class="btn-reopen" id="btn-heart-constellation" aria-label="Draw a heart shape with stars">Draw Heart 💖</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ──────────────────────────────────────────────────────
+         SECTION 8 — FINAL MESSAGE
+         ────────────────────────────────────────────────────── -->
+    <section id="final-screen" class="section">
+      <p class="final-message" id="final-message">
+        You deserve all the happiness in the world 💖
+      </p>
+      <p class="section-subtitle">Thank you for being the most wonderful person</p>
+
+      <button
+        id="btn-replay"
+        class="btn-replay"
+        aria-label="Replay the entire birthday surprise from the beginning"
+      >
+        Replay the Surprise ✨
+      </button>
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════════════════
+       MUSIC PLAYER
+       ════════════════════════════════════════════════════════ -->
+  <div class="music-player hidden" id="music-player">
+    <button
+      class="music-btn"
+      id="btn-music-toggle"
+      aria-label="Play or pause background music"
+    >
+      ▶
+    </button>
+    <div class="music-bars" id="music-bars">
+      <div class="music-bar"></div>
+      <div class="music-bar"></div>
+      <div class="music-bar"></div>
+      <div class="music-bar"></div>
+      <div class="music-bar"></div>
+    </div>
+    <span class="music-label">Music</span>
+  </div>
+
+  <!--
+    ✏️ CUSTOMISE: Replace "music.mp3" with your audio file name.
+    Place the audio file in the same folder as index.html.
+    Supported formats: .mp3, .ogg, .wav
+  -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="music.mp3" type="audio/mpeg" />
+    Your browser does not support audio playback.
+  </audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
